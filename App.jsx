@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
-import Intro from './screens/Intro';
+import IntroScreen from './screens/IntroScreen';
+import HomeScreen from './screens/HomeScreen';
 import * as SplashScreen from 'expo-splash-screen';
 
 SplashScreen.preventAutoHideAsync();
@@ -34,7 +35,8 @@ const App = () => {
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name='Intro' component={Intro} />
+          <Stack.Screen name='Intro' component={IntroScreen} options={{ headerShown: false }} />        
+          <Stack.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

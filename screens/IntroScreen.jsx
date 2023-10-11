@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { StatusBar, Animated, Text, Image, View, StyleSheet, Dimensions, TouchableOpacity  } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign } from '@expo/vector-icons';
 
 
 const {width, height} = Dimensions.get('screen');
@@ -41,27 +43,29 @@ const DATA = [
 ]
 
 
-// const LoginButton = ({navigation}) =>{
+const LoginButton = ({navigation}) =>{
   
-//   return(
-//   <TouchableOpacity
-//       onPress={()=>navigation.navigate('Phone')}
-//       style={{flex:1,alignItems:'center', justifyContent: 'center',}}
-//   >
-//       <View style={[styles.shadow,{width:100, height:50}]}>
-//           <LinearGradient
-//               style={{flex:1, alignItems:'center', justifyContent: 'center',borderRadius:20,flexDirection:'row'}}
-//               colors={["#FFF","#FFF"]}
-//               start={{x:0, y:0}}
-//               end={{x:0, y:1}}              
-//           >                               
-//             {/* <Text style={{fontFamily:'Poppins-Light',fontSize:15}}>{"Co "}</Text>              */}
-//             <Icon size={20} name='arrow-right' />            
-//           </LinearGradient>
-//       </View>            
-//   </TouchableOpacity>    
-//   )
-// }
+  return(
+  <TouchableOpacity
+      onPress={()=>navigation.navigate('Home')}
+      style={{flex:1,alignItems:'center', justifyContent: 'center',}}
+  >
+      <View style={{width:120, height:50}}>
+          <LinearGradient
+              style={{flex:1, alignItems:'center', justifyContent: 'center',borderRadius:20,flexDirection:'row'}}
+              colors={["#FFF","#FFF"]}
+              start={{x:0, y:0}}
+              end={{x:0, y:1}}              
+          >                                           
+            <Text>Get Started</Text>
+            <AntDesign name="arrowright" size={24} color="black" />         
+          </LinearGradient>
+      </View>            
+  </TouchableOpacity>    
+  )
+}
+
+
 const Indicator = ({scrollX}) => {
   return( 
   <View style={{position:'absolute', bottom:50 ,flexDirection:'row'}}>
@@ -123,7 +127,7 @@ const Square = ({scrollX}) => {
         backgroundColor:"#FFF",
         borderRadius:86,
         position:'absolute',
-        top:-height * 0.6,
+        top:-height * 0.68,
         left:-height * 0.3,
         transform:[
           {
@@ -138,7 +142,7 @@ const Square = ({scrollX}) => {
   )
 }
 
-export default function Intro({navigation}) {
+export default function IntroScreen({navigation}) {
   const scrollX = React.useRef(new Animated.Value(0)).current
   return (
     <View style={styles.container}>
@@ -159,20 +163,19 @@ export default function Intro({navigation}) {
         )}
         renderItem={({item,index})=>{
           return(
-            <View style={{width, alignItems:'center', padding:20}}>
-              <View style={{flex:0.7,justifyContent:'center'}}>
-                {/* {(index !== 3 && index !== 2) && <Image source={{uri:item.image}} style={{width:width/2, height:height/2, resizeMode:'contain'}}/>}     */}
-                {/* <Slide source={item.source}/>                 */}
-                <Image style={{width:120, height:120, resizeMode:'contain'}}  source={item.source}/>
-              </View> 
-              <View style={{flex:.2}}>
-                <Text style={{color:"#FFF",fontWeight:'800',fontSize:28, marginBottom:10,fontFamily:'Poppins-SemiBold'}} >{item.title}</Text>
-                <Text style={{fontWeight:'300', color:"#FFF",fontFamily:'Poppins-Regular', fontSize:16}} >{item.description}</Text>
-              </View>  
-              <View style={{flex:.1}}>
-                
-              </View>              
+            <View style={{ width, alignItems: 'center', padding: 20 }}>
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <Image style={{ width: 120, height: 120, resizeMode: 'contain' }} source={item.source} />
             </View>
+            <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+              <Text style={{ color: "#FFF", fontWeight: '800', fontSize: 28, fontFamily: 'Poppins-SemiBold', textAlign:'center' }}>{item.title}</Text>
+              <Text style={{ fontWeight: '300', color: "#FFF", fontFamily: 'Poppins-Regular', fontSize: 16, textAlign:'center' }}>{item.description}</Text>
+            </View>
+            <View style={{ flex: 0.2, marginTop: 10 }}>
+              <LoginButton navigation={navigation} />
+            </View>
+          </View>
+          
           )
         }}
       />
@@ -188,15 +191,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  shadow:{
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 0,
-        height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
-}
 });

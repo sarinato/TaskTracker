@@ -18,7 +18,11 @@ export default  App = () => {
   return (
     <View style={styles.container}>
 
-      <Modal animationType='slide' visible={addTodoVisible} >
+      < Modal 
+            animationType='slide' 
+            visible={addTodoVisible}
+            onRequestClose={() => toggleAddTodoVisible()}
+        >
         <View>
           <Text>I'm a Modal</Text>
         </View>
