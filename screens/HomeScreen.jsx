@@ -5,7 +5,7 @@ import {AntDesign} from '@expo/vector-icons'
 import tempData from '../tempData'
 import TodoList from '../components/TodoList';
 import { useState, useEffect } from 'react';
-
+import AddListModal from '../components/AddListModal';
 
 export default  App = () => {
 
@@ -18,14 +18,12 @@ export default  App = () => {
   return (
     <View style={styles.container}>
 
-      < Modal 
+        <Modal 
             animationType='slide' 
             visible={addTodoVisible}
             onRequestClose={() => toggleAddTodoVisible()}
         >
-        <View>
-          <Text>I'm a Modal</Text>
-        </View>
+            <AddListModal closeModal={toggleAddTodoVisible}  />
       </Modal>
 
       <View style={{flexDirection: 'row'}}>
