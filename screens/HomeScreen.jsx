@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native';
 import colors from '../Colors';
 import {AntDesign} from '@expo/vector-icons'
@@ -13,6 +12,12 @@ export default  App = () => {
 
   const toggleAddTodoVisible = () => {
     setAddTodoVisible((addTodoVisible) => !addTodoVisible)
+  }
+
+  const renderList = list => {
+    return(
+        <TodoList list={list} />
+    )
   }
   
   return (
@@ -51,9 +56,7 @@ export default  App = () => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
 
-          renderItem = {({item}) => (
-            <TodoList list={item} />
-          ) }
+          renderItem = {({item}) => renderList(item)}
 
         />
       </View>
