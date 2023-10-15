@@ -2,18 +2,19 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View, Modal } from 'react
 import { useContext } from 'react';
 import colors from '../Colors';
 import {AntDesign} from '@expo/vector-icons'
-// import tempData from '../tempData'
 import TodoList from '../components/TodoList';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import tempData from '../tempData'
 import AddListModal from '../components/AddListModal';
 import { ThemeContext } from '../ThemeProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default  App = () => {
 
     const {lists, setLists} = useContext(ThemeContext);    
 
     const [addTodoVisible, setAddTodoVisible] = useState(false)
-    //   const [lists, setLists] = useState(tempData)
 
     const toggleAddTodoVisible = () => {
         setAddTodoVisible((addTodoVisible) => !addTodoVisible)
@@ -26,15 +27,50 @@ export default  App = () => {
     }
 
     const addList = list => {
-        setLists([...lists, {...list, id:lists.length + 1, todos:[] }])
+        let newData = [...lists, {...list, id:lists.length + 1, todos:[] }]
+        persistDataToStorage(newData)
     }
 
     const updateList = list => {
     
-        setLists( lists.map(item => {
+        let newData = lists.map(item => {
             return item.id === list.id ? list : item
-        }))
+        })
+
+        persistDataToStorage(newData)
     }
+
+
+    const persistDataToStorage = async (newData) => {
+    try {
+            await AsyncStorage.setItem('storedData', JSON.stringify(newData));
+            setLists(newData);
+    } catch (error) {
+            console.error('Error persisting data to AsyncStorage:', error);
+        }
+    };
+    
+    useEffect(() => {        
+        const loadData = async () => {
+            try {
+                // Check if data has been stored before
+                const storedData = await AsyncStorage.getItem('storedData');
+            if (storedData !== null) {
+                // Data exists, load it
+                
+                setLists(JSON.parse(storedData));
+            } else {
+                // Data doesn't exist, initialize and store it for the first time
+                const initialData = lists;                
+                persistDataToStorage(initialData);
+            }
+            } catch (error) {
+            console.error('Error loading data from AsyncStorage:', error);
+            }
+        };
+
+        loadData();
+    }, []);
   
     return (
         <View style={styles.container}>

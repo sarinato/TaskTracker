@@ -11,8 +11,8 @@ const TodoList = ({list, updateList}) => {
         setShowListVisible(showListVisible => !showListVisible)
     }
 
-    const completedCount = list.todos.filter(todo => todo.completed).length;
-    const remainingCount = list.todos.length - completedCount;
+    const completedCount = list?.todos.filter(todo => todo.completed).length;
+    const remainingCount = list?.todos.length - completedCount;
 
     return (
     <View>
