@@ -1,17 +1,38 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, FlatList, KeyboardAvoidingView, TextInput } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, FlatList, KeyboardAvoidingView, TextInput, Keyboard } from 'react-native'
+import React,{useState} from 'react'
 import colors from '../Colors'
 import {AntDesign, Ionicons} from '@expo/vector-icons'
 
-const ToDoModal = ({list, closeModal}) => {
+const ToDoModal = ({list, closeModal, updateList}) => {
+
+    const [newTodo, setNewTodo] = useState('')
 
     const taskCount = list.todos.length
     const completedCount = list.todos.filter(todo => todo.completed).length
 
-    const renderTodo = (todo) => {
+    const toggleTodoCompleted = index => {
+        let updatedList = list;
+        updatedList.todos[index].completed = !updatedList.todos[index].completed
+
+        updateList(updatedList)
+    }
+
+    const addTodo = () => {
+        let updatedList = list
+        updatedList.todos.push({title: newTodo, completed:false})
+        
+        setNewTodo('') //Empty the input
+        updateList(updatedList)
+
+        
+
+        Keyboard.dismiss()
+    }
+
+    const renderTodo = (todo, index) => {
         return(
             <View style={styles.todoContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => toggleTodoCompleted(index)}>
                     <Ionicons 
                         name={todo.completed ? 'ios-square' : 'ios-square-outline' }
                         size={24} 
@@ -29,41 +50,43 @@ const ToDoModal = ({list, closeModal}) => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={{position: 'absolute', top:64, right:32, zIndex:10}} onPress={closeModal}>
-                <AntDesign name='close' size={24} color={colors.black} />
-            </TouchableOpacity>
+        <KeyboardAvoidingView style={{flex:1}} behavior='padding'>
+            <SafeAreaView style={styles.container}>
+                <TouchableOpacity style={{position: 'absolute', top:64, right:32, zIndex:10}} onPress={closeModal}>
+                    <AntDesign name='close' size={24} color={colors.black} />
+                </TouchableOpacity>
 
-            <View style={[styles.section, styles.header ,{borderBottomColor: list.color}]}>
-                <View>
-                    <Text style={styles.title}>{list.name}</Text>
-                    <Text style={styles.taskCount}>
-                        {completedCount} of {taskCount} Tasks
-                    </Text>
+                <View style={[styles.section, styles.header ,{borderBottomColor: list.color}]}>
+                    <View>
+                        <Text style={styles.title}>{list.name}</Text>
+                        <Text style={styles.taskCount}>
+                            {completedCount} of {taskCount} Tasks
+                        </Text>
+                    </View>
+
                 </View>
 
-            </View>
+                <View style={[styles.section, {flex: 3}]}>
+                    <FlatList 
+                        data={list.todos} 
+                        renderItem={({item, index}) => renderTodo(item, index)}
+                        keyExtractor={item => item.title}
+                        contentContainerStyle={{paddingHorizontal:32, paddingVertical:64}}
+                        showsVerticalScrollIndicator={false}
+                    >
 
-            <View style={[styles.section, {flex: 3}]}>
-                <FlatList 
-                    data={list.todos} 
-                    renderItem={({item}) => renderTodo(item)}
-                    keyExtractor={item => item.title}
-                    contentContainerStyle={{paddingHorizontal:32, paddingVertical:64}}
-                    showsVerticalScrollIndicator={false}
-                >
+                    </FlatList>
+                </View>
 
-                </FlatList>
-            </View>
+                <View style={[styles.section, styles.footer]} behavior='padding'>
+                    <TextInput style={[styles.input, {borderColor: list.color}]} onChangeText={text => setNewTodo(text) } value={newTodo}/>
 
-            <KeyboardAvoidingView style={[styles.section, styles.footer]} behavior='padding'>
-                <TextInput style={[styles.input, {borderColor: list.color}]}/>
-
-                <TouchableOpacity style={[styles.addTodo, {backgroundColor: list.color}]}>
-                    <AntDesign  name='plus' size={16} color={colors.white}/>
-                </TouchableOpacity>                
-            </KeyboardAvoidingView>
-        </SafeAreaView>
+                    <TouchableOpacity style={[styles.addTodo, {backgroundColor: list.color}]} onPress={addTodo}>
+                        <AntDesign  name='plus' size={16} color={colors.white}/>
+                    </TouchableOpacity>                
+                </View>
+            </SafeAreaView>
+        </KeyboardAvoidingView>
     )
 }
 

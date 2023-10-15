@@ -5,7 +5,7 @@ import colors from '../Colors'
 import tempData from '../tempData'
 
 
-const AddListModal = ({closeModal}) => {
+const AddListModal = ({closeModal, addList}) => {
 
     const backgroundColors = [
         '#FF5733',  // Coral
@@ -22,11 +22,8 @@ const AddListModal = ({closeModal}) => {
 
     const createTodo = () => {
 
-        tempData.push({
-            name,
-            color,
-            todos:[]
-        })
+        const list = {name, color}
+        addList(list)
 
         closeModal()
     }

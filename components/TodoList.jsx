@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import colors from '../Colors'
 import ToDoModal from './ToDoModal'
 
-const TodoList = ({list}) => {
+const TodoList = ({list, updateList}) => {
 
     const [showListVisible, setShowListVisible] = useState(false)
 
@@ -22,7 +22,7 @@ const TodoList = ({list}) => {
             onRequestClose={toggleListModal}
         
         >
-            <ToDoModal list={list} closeModal={toggleListModal}/>
+            <ToDoModal list={list} closeModal={toggleListModal} updateList={updateList} />
 
         </Modal>
 
