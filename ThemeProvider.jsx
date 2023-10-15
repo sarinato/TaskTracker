@@ -1,20 +1,21 @@
 import React, {createContext, useState} from 'react';
+import tempData from './tempData'
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({children}) => {
 
-  const [language, setLanguage] = useState(0)
+  const [lists, setLists] = useState(tempData)
 
   return (
-    <AuthContext.Provider
+    <ThemeContext.Provider
       value={{        
-        language,
-        setLanguage,      
+        lists,
+        setLists,      
       }}>
-        
+
       {children}
 
-    </AuthContext.Provider>
+    </ThemeContext.Provider>
   );
 };

@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import IntroScreen from './screens/IntroScreen';
 import HomeScreen from './screens/HomeScreen';
 import * as SplashScreen from 'expo-splash-screen';
+import {ThemeProvider} from './ThemeProvider';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,14 +32,17 @@ const App = () => {
     return null;
   }
 
-  return (
+  return (    
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name='Intro' component={IntroScreen} options={{ headerShown: false }} />        
-          <Stack.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ThemeProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name='Intro' component={IntroScreen} options={{ headerShown: false }} />        
+            <Stack.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+
     </View>
   );
 };
