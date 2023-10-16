@@ -52,7 +52,7 @@ const AddListModal = ({closeModal, addList}) => {
         <View style={{alignSelf: 'stretch', marginHorizontal: 32}}>
             <Text style={styles.title}>Create ToDO List</Text>
 
-            <TextInput style={styles.input} placeholder='List Name ?' onChangeText={text => setName(text)} />
+            <TextInput style={styles.input}  placeholderTextColor={colors.gray} placeholder='List Name ?' onChangeText={text => setName(text)} />
 
             <View style={{flexDirection: 'row', justifyContent:'space-between', marginTop: 12}}>
                 {renderColors()} 
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         height:50,
         marginTop:8,
         paddingHorizontal: 16,
-        fontSize: 18
+        fontSize: 18,
     },
     create:{
         marginTop: 24,

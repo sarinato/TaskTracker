@@ -8,42 +8,30 @@ const {width, height} = Dimensions.get('screen');
 
 
 
-const bgs = ['#20bf6b', '#20bf6b', '#20bf6b', '#20bf6b', '#20bf6b'];
+const bgs = ['#24A6D9', '#24A6D9', '#24A6D9', '#24A6D9', '#24A6D9'];
 const DATA = [
   {
     "key": "3571572",
-    "title": "COMMENT UTILISER MOVA",
-    "description": "Dites-nous quoi, où et quand vous avez besoin d'aide, chosissez un ou deux assistants et obtenez un prix d'avance.",
-    "source": require('../assets/images/couch.png')
+    "title": "Task Tracker",
+    "description": "Effortlessly manage your daily tasks and to-do list for enhanced productivity",
+    "source": require('../assets/images/slide1.png')
   },
   { 
     "key": "3571747",
-    "title": "COMMANDER UNE MOVA",
-    "description": "Dites-nous quoi, où et quand vous avez besoin d'aide, chosissez un ou deux assistants et obtenez un prix d'avance.",
-    "source": require('../assets/images/couch.png')
+    "title": "Quick Tasks",
+    "description": "Stay organized and focused. Easily track your tasks, set priorities, and accomplish more throughout the day.",
+    "source": require('../assets/images/slide2.png')
   },
   {
     "key": "3571603",
-    "title": "CONFIANCE ET SÉCURITÉ",
-    "description": "Tous nos chauffeurs sont des professionels du domaine, qui ont passé par un processus selectif.",
-    "source": require('../assets/images/couch.png')
+    "title": "Easy Productivity",
+    "description": "A straightforward app to manage tasks effortlessly. Enhance your daily routine and achieve your goals with ease.",
+    "source": require('../assets/images/slide3.png')
   },
-  {
-    "key": "3571606",
-    "title": "ASSISTANTS À LA DEMANDE",
-    "description": "Vous pouvez désormais réserver des assistants pour vos taches lourdes, et arrivent jusqu'à chez vous.",
-    "source": require('../assets/images/couch.png')
-  },
-  {
-    "key": "3571601",
-    "title": "PAYEZ, ET ÉVALUEZ",
-    "description": "Payez, évaluer et laisser même un pourboire à votre chauffeur ou assistant, une fois la commande est terminée.",
-    "source": require('../assets/images/couch.png')
-  }
 ]
 
 
-const LoginButton = ({navigation}) =>{
+const GetStarted = ({navigation}) =>{
   
   return(
   <TouchableOpacity
@@ -171,9 +159,9 @@ export default function IntroScreen({navigation}) {
               <Text style={{ color: "#FFF", fontWeight: '800', fontSize: 28, fontFamily: 'Poppins-SemiBold', textAlign:'center' }}>{item.title}</Text>
               <Text style={{ fontWeight: '300', color: "#FFF", fontFamily: 'Poppins-Regular', fontSize: 16, textAlign:'center' }}>{item.description}</Text>
             </View>
-            <View style={{ flex: 0.2, marginTop: 10 }}>
-              <LoginButton navigation={navigation} />
-            </View>
+            {index===2 &&<View style={{ flex: 0.2, marginTop: 10 }}>
+              <GetStarted navigation={navigation} />
+            </View>}
           </View>
           
           )

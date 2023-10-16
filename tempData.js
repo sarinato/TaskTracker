@@ -9,51 +9,7 @@ const todoLists = [
             { title: 'Review code changes', completed: false },
             { title: 'Send progress report', completed: false },
         ],
-    },
-    {
-        id:1,
-        name: 'Personal',
-        color: '#2ecc71',
-        todos: [
-            { title: 'Go for a run', completed: true },
-            { title: 'Read a book', completed: false },
-            { title: 'Grocery shopping', completed: false },
-            { title: 'Write in the journal', completed: true },
-        ],
-    },
-    {
-        id:2,
-        name: 'Job',
-        color: '#2ecc71',
-        todos: [
-            { title: 'Go for a run', completed: true },
-            { title: 'Read a book', completed: false },
-            { title: 'Grocery shopping', completed: false },
-            { title: 'Write in the journal', completed: true },
-        ],
-      },
-      {
-        id:3,
-        name: 'Interview',
-        color: '#2ecc71',
-        todos: [
-            { title: 'Go for a run', completed: true },
-            { title: 'Read a book', completed: false },
-            { title: 'Grocery shopping', completed: false },
-            { title: 'Write in the journal', completed: true },
-        ],
-    },
-      {
-        id:4,
-        name: 'Hike',
-        color: '#2ecc71',
-        todos: [
-            { title: 'Go for a run', completed: true },
-            { title: 'Read a book', completed: false },
-            { title: 'Grocery shopping', completed: false },
-            { title: 'Write in the journal', completed: true },
-        ],
-      },    
+    },    
   ];
   
   export default todoLists;

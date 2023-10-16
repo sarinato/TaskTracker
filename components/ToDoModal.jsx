@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, FlatList, KeyboardAvoidingView, TextInput, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Animated } from 'react-native'
 import React,{useState} from 'react'
 import colors from '../Colors'
 import {AntDesign, Ionicons} from '@expo/vector-icons'
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 const ToDoModal = ({list, closeModal, updateList}) => {
 
@@ -29,23 +31,47 @@ const ToDoModal = ({list, closeModal, updateList}) => {
         Keyboard.dismiss()
     }
 
+    const deleteTodo = index => {
+        let updatedList = list
+        list.todos.splice(index, 1)
+
+        updateList(updatedList)
+    }
+
+
     const renderTodo = (todo, index) => {
         return(
-            <View style={styles.todoContainer}>
-                <TouchableOpacity onPress={() => toggleTodoCompleted(index)}>
-                    <Ionicons 
-                        name={todo.completed ? 'ios-square' : 'ios-square-outline' }
-                        size={24} 
-                        color={colors.gray} 
-                        style={{width:32}} 
-                    />
-                </TouchableOpacity>                
+            <GestureHandlerRootView>
+                <Swipeable renderRightActions={(_, dragX) => rightActions(dragX, index)}>
+                    <View style={styles.todoContainer}>
+                        <TouchableOpacity onPress={() => toggleTodoCompleted(index)}>
+                            <Ionicons 
+                                name={todo.completed ? 'ios-square' : 'ios-square-outline' }
+                                size={24} 
+                                color={colors.gray} 
+                                style={{width:32}} 
+                            />
+                        </TouchableOpacity>                
 
-                <Text style={[styles.todo, {color:todo.completed ? colors.gray : colors.black, 
-                    textDecorationLine: todo.completed ? 'line-through' : 'none'}]}>
-                        {todo.title}
-                </Text>
-            </View>
+                        <Text style={[styles.todo, {color:todo.completed ? colors.gray : colors.black, 
+                            textDecorationLine: todo.completed ? 'line-through' : 'none'}]}>
+                                {todo.title}
+                        </Text>
+                    </View>
+                </Swipeable>
+            </GestureHandlerRootView>
+        )
+    }
+
+    const rightActions = (dragX, index) => {
+        return(
+            <TouchableOpacity onPress={() => deleteTodo(index)}>
+                <Animated.View style={styles.deleteButton}>
+                    <Animated.Text style={{color: colors.white, fontWeight:"800"}}>
+                        Delete
+                    </Animated.Text>
+                </Animated.View>
+            </TouchableOpacity>
         )
     }
 
@@ -66,12 +92,11 @@ const ToDoModal = ({list, closeModal, updateList}) => {
 
                 </View>
 
-                <View style={[styles.section, {flex: 3}]}>
+                <View style={[styles.section, {flex: 3, marginVertical:16}]}>
                     <FlatList 
                         data={list.todos} 
                         renderItem={({item, index}) => renderTodo(item, index)}
-                        keyExtractor={item => item.title}
-                        contentContainerStyle={{paddingHorizontal:32, paddingVertical:64}}
+                        keyExtractor={item => item.title}                        
                         showsVerticalScrollIndicator={false}
                     >
 
@@ -98,14 +123,14 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent: 'center'
     },
-    section:{
-        flex:1,
+    section:{        
         alignSelf:'stretch'
     },
     header:{
         justifyContent:'flex-end',
         marginLeft: 64,
-        borderBottomWidth:3
+        borderBottomWidth:3,
+        paddingTop:16
     },
     title:{
         fontSize:30,
@@ -121,7 +146,8 @@ const styles = StyleSheet.create({
     footer:{
         paddingHorizontal: 32,
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        paddingVertical: 16
     },
     input:{
         flex:1,
@@ -141,11 +167,19 @@ const styles = StyleSheet.create({
     todoContainer:{
         paddingVertical: 16,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingLeft: 32
     },
     todo:{
         color: colors.black,
         fontWeight: '700',
         fontSize: 16
+    },
+    deleteButton:{
+        flex:1,
+        backgroundColor: colors.red,
+        justifyContent:'center',
+        alignItems:'center',
+        width: 80
     }
 })

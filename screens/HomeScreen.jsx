@@ -4,7 +4,6 @@ import colors from '../Colors';
 import {AntDesign} from '@expo/vector-icons'
 import TodoList from '../components/TodoList';
 import { useState, useEffect } from 'react';
-import tempData from '../tempData'
 import AddListModal from '../components/AddListModal';
 import { ThemeContext } from '../ThemeProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,6 +44,7 @@ export default  App = () => {
     try {
             await AsyncStorage.setItem('storedData', JSON.stringify(newData));
             setLists(newData);
+
     } catch (error) {
             console.error('Error persisting data to AsyncStorage:', error);
         }
@@ -87,7 +87,7 @@ export default  App = () => {
             <View style={ styles.divider}/>
 
             <Text style={styles.title}>
-                Todo <Text style={{ fontWeight: '300', color: colors.blue }}>Lists</Text>
+                Task <Text style={{ fontWeight: '300', color: colors.blue }}>Tracker</Text>
             </Text>        
 
             <View style={ styles.divider}/>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         fontSize: 38,
         fontWeight: '800',
         color: colors.black,
-        paddingHorizontal:64
+        paddingHorizontal:34
     },
 
     addList:{
