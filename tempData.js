@@ -1,13 +1,11 @@
 const todoLists = [
     {   
         id:0,
-        name: 'Work',
+        name: 'Get Started',
         color: '#3498db',
         todos: [
-            { title: 'Complete project proposal', completed: false },
-            { title: 'Prepare for the meeting', completed: true },
-            { title: 'Review code changes', completed: false },
-            { title: 'Send progress report', completed: false },
+            { title: 'Create your first ToDO', completed: false },
+            { title: 'Play with the app until you get used to it', completed: false },
         ],
     },    
   ];
